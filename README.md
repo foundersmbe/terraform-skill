@@ -43,6 +43,7 @@ This plugin is distributed via Claude Code marketplace using `.claude-plugin/mar
 
 ```bash
 /plugin marketplace add antonbabenko/terraform-skill
+/plugin install terraform-skill@antonbabenko
 ```
 
 ### Manual Installation

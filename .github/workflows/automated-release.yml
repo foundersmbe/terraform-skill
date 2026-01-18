@@ -53,12 +53,10 @@ jobs:
       # This ensures all three version fields in marketplace.json stay synchronized:
       # - root version (updated by conventional-changelog-action above)
       # - plugins[0].version (synced here)
-      # - plugins[0].source.ref (synced here)
       - name: Sync Plugin Version and Git Ref
         if: steps.changelog.outputs.skipped == 'false'
         env:
           VERSION: ${{ steps.changelog.outputs.version }}
-          TAG: ${{ steps.changelog.outputs.tag }}
         run: |
           python3 << 'EOF'
           import json
@@ -67,7 +65,6 @@ jobs:
 
           try:
               version = os.environ['VERSION']
-              tag = os.environ['TAG']
 
               with open('.claude-plugin/marketplace.json', 'r') as f:
                   data = json.load(f)
@@ -78,7 +75,6 @@ jobs:
 
               # Sync versions
               data['plugins'][0]['version'] = version
-              data['plugins'][0]['source']['ref'] = tag
 
               # Validate synced state
               if data['version'] != version:
@@ -89,7 +85,6 @@ jobs:
                   f.write('\n')
 
               print(f"✅ Synced plugin version to {version}")
-              print(f"✅ Synced source ref to {tag}")
 
           except Exception as e:
               print(f"❌ ERROR: Failed to sync versions: {e}")

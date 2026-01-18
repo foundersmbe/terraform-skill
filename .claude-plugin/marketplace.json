@@ -22,7 +22,8 @@
         "testing",
         "ci-cd",
         "modules"
-      ]
+      ],
+      "version": "1.0.0"
     }
   ]
 }
