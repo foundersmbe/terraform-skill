@@ -54,17 +54,29 @@ jobs:
 
           frontmatter = yaml.safe_load(parts[1])
 
-          if 'name' not in frontmatter or 'description' not in frontmatter:
-              print("❌ ERROR: Missing required fields")
+          # Check required fields (but allow additional optional fields)
+          required = {'name', 'description'}
+          missing = required - set(frontmatter.keys())
+
+          if missing:
+              print(f"❌ ERROR: Missing required fields: {missing}")
               sys.exit(1)
 
-          allowed = {'name', 'description'}
-          extra = set(frontmatter.keys()) - allowed
+          # Log optional fields if present (informational only)
+          optional_fields = set(frontmatter.keys()) - required
+          if optional_fields:
+              print(f"📋 Optional fields present: {optional_fields}")
 
-          if extra:
-              print(f"❌ ERROR: Extra fields: {extra}")
-              print("   Only 'name' and 'description' allowed")
-              sys.exit(1)
+              if 'license' in frontmatter:
+                  print(f"   - license: {frontmatter['license']}")
+
+              if 'metadata' in frontmatter:
+                  metadata = frontmatter['metadata']
+                  if isinstance(metadata, dict):
+                      if 'version' in metadata:
+                          print(f"   - metadata.version: {metadata['version']}")
+                      if 'author' in metadata:
+                          print(f"   - metadata.author: {metadata['author']}")
 
           name = frontmatter['name']
           if not re.match(r'^[a-zA-Z0-9-]+$', name):
