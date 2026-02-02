@@ -132,7 +132,7 @@ Side-by-side ✅ DO vs ❌ DON'T examples for:
 ## Why This Skill?
 
 **Based on Production Experience:**
-- Patterns from [terraform-best-practices.com](https://terraform-best-practices.com)
+- Patterns from [terraform-best-practices.com](https://www.terraform-best-practices.com/)
 - Community-tested approaches from terraform-aws-modules
 - AWS Hero expertise in enterprise IaC
 - Real-world usage across 100+ modules
